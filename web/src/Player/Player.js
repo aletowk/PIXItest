@@ -7,16 +7,32 @@ class Player extends PIXI.Sprite
 		super();
 		this.name = name;
 		this.interactive = true;
-		this.setClick();
+		this.setClickFunction();
+		this.selected = false
 	}
 	setTexture(texture)
 	{
 		this.texture = texture;
 	}
-	setClick()
+	setClickFunction(fctArg)
 	{
-		this.on('click',function(e){
-			console.log("Clicked");
-		});
+		this.on('click',function(e)
+			{
+				this.selected = !this.selected
+				console.log("Clicked on Player : selected = "+this.selected);
+			});
+	}
+
+	update()
+	{
+		if(this.selected)
+		{
+			// Add circle around sprite
+			
+			// Movement possibility
+
+			// show informations
+		}
+
 	}
 }
