@@ -1,34 +1,69 @@
 PIXI.settings.SPRITE_MAX_TEXTURES = Math.min(PIXI.settings.SPRITE_MAX_TEXTURES , 16);
+
+/* Create and instantiate the renderer */
+var renderer = new PIXI.autoDetectRenderer(
+    window.innerWidth,
+    window.innerHeight,
+    {
+        "antialias": true,
+        "autoResize": true,
+        "transparent": false,
+        "resolution": 2
+    }
+);
+document.body.appendChild(renderer.view);
+ 
+/* Global variables */
+let stage = new PIXI.Container();
+let player = new Player("Jack",stage);
+let updatableList = [];
+
+
+setupScene();
+
+
+updateScene();
+ 
+
+
+
+/* --------------------- */
+/* Functions definitions */
+/* --------------------- */
+function updateScene() 
+{
+    requestAnimationFrame(updateScene);
+    
+    for(var elem in updatableList)
+    {
+        updatableList[elem].update();
+    }
+
+    renderer.render(stage);
+}
+function setupScene()
+{
+    /* Setup graphics objects */
+    PIXI.loader.add("./ressources/sprites/ship.png")
+               .on("progress",loadImagesProgress)
+               .load(setupAfterLoad);
+}
+function setupAfterLoad()
+{
+    player.init(PIXI.loader.resources["./ressources/sprites/ship.png"].texture);
+
+
+
+    /* Setup object in scene (append child, set positions...) */
+    stage.addChild(player);
+    updatableList.push(player);
+
+    document.addEventListener("click", function()
+    {
+        player.move(event);
+    });
+}
 function loadImagesProgress(loader)
 {
     console.log("Load images : " + loader.progress + "%")
 }
-function setupTextures()
-{
-	player.setTexture(PIXI.loader.resources["./ressources/sprites/ship.png"].texture);
-}
-
-let app = new PIXI.Application({ 
-    width: 800,         // default: 800
-    height: 600,        // default: 600
-    antialias: true,    // default: false
-    transparent: false, // default: false
-    resolution: 1       // default: 1
-  }
-);
-
-let player = new Player("Jack");
-
-PIXI.loader.add("./ressources/sprites/ship.png")
-           .on("progress",loadImagesProgress)
-           .load(setupTextures)
-
-let updatable_elements = [];
-
-updatable_elements.push(player);
-
-app.stage.addChild(player);
-
-
-
-document.body.appendChild(app.view);
