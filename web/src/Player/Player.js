@@ -2,9 +2,10 @@
 
 class Player extends PIXI.Sprite
 {
-	constructor(name,parent)
+	constructor(name,parent,uiLayer)
 	{
 		super();
+		this.uiLayer = uiLayer;
 		this.name = name;
 		this.interactive = true;
 		this.selected = false;
@@ -20,8 +21,8 @@ class Player extends PIXI.Sprite
 
 		this.setClickFunction();
 		this.setParent(parent);
-		this.parent.addChild(this.selectionCircle);
-		this.parent.addChild(this.targetCircle);
+		this.uiLayer.addChild(this.selectionCircle);
+		this.uiLayer.addChild(this.targetCircle);
 	}
 	init(texture)
 	{
@@ -33,7 +34,7 @@ class Player extends PIXI.Sprite
 		this.selectionCircle.endFill();
 		this.selectionCircle.visible = false;
 		/* Target Position Circle */
-		this.targetCircle.beginFill(0xAAFF00,0.1);
+		this.targetCircle.beginFill(0xFF0000,0.1);
 		this.targetCircle.lineStyle(0);
 		this.targetCircle.drawCircle(0,0,20);
 		this.targetCircle.endFill();

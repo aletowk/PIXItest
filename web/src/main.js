@@ -15,9 +15,10 @@ document.body.appendChild(renderer.view);
  
 /* Global variables */
 let stage = new PIXI.Container();
-let player = new Player("Jack",stage);
+let uiLayer = new PIXI.Container();
+let player = new Player("Jack",stage,uiLayer);
 let updatableList = [];
-
+let map = new Tilemap(100,32,stage);
 
 setupScene();
 
@@ -38,6 +39,7 @@ function updateScene()
     {
         updatableList[elem].update();
     }
+    // stage.position.set(renderer.screen.width/2,renderer.screen.height/2);
 
     renderer.render(stage);
 }
@@ -45,6 +47,8 @@ function setupScene()
 {
     /* Setup graphics objects */
     PIXI.loader.add("./ressources/sprites/ship.png")
+               .add("./ressources/sprites/Tiles/GroundTile.png")
+               .add("./ressources/sprites/Tiles/GrassTile.png")
                .on("progress",loadImagesProgress)
                .load(setupAfterLoad);
 }
@@ -52,10 +56,15 @@ function setupAfterLoad()
 {
     player.init(PIXI.loader.resources["./ressources/sprites/ship.png"].texture);
 
-
+    map.init(["./ressources/sprites/Tiles/GroundTile.png",
+              "./ressources/sprites/Tiles/GrassTile.png" ]);
+    // map.printArray();
 
     /* Setup object in scene (append child, set positions...) */
+    stage.addChild(map);
     stage.addChild(player);
+    stage.addChild(uiLayer);
+
     updatableList.push(player);
 
     document.addEventListener("click", function()
