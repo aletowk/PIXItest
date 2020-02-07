@@ -18,7 +18,7 @@ let stage = new PIXI.Container();
 let uiLayer = new PIXI.Container();
 let player = new Player("Jack",stage,uiLayer);
 let updatableList = [];
-let map = new Tilemap(100,32,stage);
+let map = new Tilemap(100,64,stage);
 
 setupScene();
 
@@ -47,8 +47,10 @@ function setupScene()
 {
     /* Setup graphics objects */
     PIXI.loader.add("./ressources/sprites/ship.png")
-               .add("./ressources/sprites/Tiles/GroundTile.png")
-               .add("./ressources/sprites/Tiles/GrassTile.png")
+               .add("./ressources/sprites/Tiles/GroundTile_64x64.png")
+               .add("./ressources/sprites/Tiles/GrassTile_64x64.png")
+               .add("./ressources/sprites/Tiles/GridTile_Grey_64x64.png")
+               .add("./ressources/sprites/Trees/Tree1_60x60.png")
                .on("progress",loadImagesProgress)
                .load(setupAfterLoad);
 }
@@ -56,8 +58,8 @@ function setupAfterLoad()
 {
     player.init(PIXI.loader.resources["./ressources/sprites/ship.png"].texture);
 
-    map.init(["./ressources/sprites/Tiles/GroundTile.png",
-              "./ressources/sprites/Tiles/GrassTile.png" ]);
+    map.init(["./ressources/sprites/Tiles/GroundTile_64x64.png",
+              "./ressources/sprites/Tiles/GrassTile_64x64.png" ]);
     // map.printArray();
 
     /* Setup object in scene (append child, set positions...) */

@@ -29,9 +29,9 @@ class Tilemap extends PIXI.Container
 			{
 				x = i*this.tilesize;
 				y = j*this.tilesize;
-				var value = Math.abs(noise.perlin2(x / 200, y / 200))*256;
+				var value = Math.abs(noise.perlin2(x / 200, y / 200));
 				str = str.concat(' ',value)
-				if(value > 256/4)
+				if(value > 0.25)
 					id = 0
 				else
 					id = 1
