@@ -47,6 +47,7 @@ function setupScene()
 {
     /* Setup graphics objects */
     PIXI.loader.add("./ressources/sprites/ship.png")
+               .add("./ressources/sprites/Assets/Units/Sword_60x60.png")
                .add("./ressources/sprites/Tiles/GroundTile_64x64.png")
                .add("./ressources/sprites/Tiles/GrassTile_64x64.png")
                .add("./ressources/sprites/Tiles/GridTile_Grey_64x64.png")
@@ -56,7 +57,7 @@ function setupScene()
 }
 function setupAfterLoad()
 {
-    player.init(PIXI.loader.resources["./ressources/sprites/ship.png"].texture);
+    player.init(PIXI.loader.resources["./ressources/sprites/Assets/Units/Sword_60x60.png"].texture);
 
     map.init(["./ressources/sprites/Tiles/GroundTile_64x64.png",
               "./ressources/sprites/Tiles/GrassTile_64x64.png" ]);
