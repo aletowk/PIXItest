@@ -24,7 +24,7 @@ class Player extends PIXI.Sprite
 		this.uiLayer.addChild(this.selectionCircle);
 		this.uiLayer.addChild(this.targetCircle);
 	}
-	init(texture)
+	init(texture,map)
 	{
 		this.texture = texture;
 		/* Selection Circle */
@@ -34,7 +34,7 @@ class Player extends PIXI.Sprite
 		this.selectionCircle.endFill();
 		this.selectionCircle.visible = false;
 		/* Target Position Circle */
-		this.targetCircle.beginFill(0xFF0000,0.1);
+		this.targetCircle.beginFill(0xFF0000,1);
 		this.targetCircle.lineStyle(0);
 		this.targetCircle.drawCircle(0,0,20);
 		this.targetCircle.endFill();
@@ -53,6 +53,10 @@ class Player extends PIXI.Sprite
 								}	
 							})
 		this.targetCircle.visible = false;
+
+		this.map = map;
+		this.position.x = this.map.tilesize/2;
+		this.position.y = this.map.tilesize/2;
 	}
 	setClickFunction(fctArg)
 	{
@@ -87,9 +91,12 @@ class Player extends PIXI.Sprite
 	{
 		if(this.movingFlag)
 		{
+			let mapTile_X = Math.floor(event.clientX / this.map.tilesize);
+			let mapTile_Y = Math.floor(event.clientY / this.map.tilesize);
+			console.log("Tile ID : "+mapTile_X+" | "+mapTile_Y);
 			/* Make Target Circle Visible */
-			this.targetCircle.x = event.clientX;
-			this.targetCircle.y = event.clientY;
+			this.targetCircle.x = (mapTile_X * this.map.tilesize) + (this.map.tilesize/2);
+			this.targetCircle.y = (mapTile_Y * this.map.tilesize) + (this.map.tilesize/2);
 			this.targetCircle.visible = true;
 			this.selected = true;
 			this.movingFlag = false;

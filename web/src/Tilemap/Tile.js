@@ -14,7 +14,7 @@ class Tile extends PIXI.Sprite
 		if(rand > 0.1)
 			this.assetSprite.texture = null;
 		else
-			this.assetSprite.texture = PIXI.loader.resources["./ressources/sprites/Trees/Tree1_60x60.png"].texture;
+			this.assetSprite.texture = PIXI.loader.resources["./ressources/sprites/Assets/Trees/Tree1_60x60.png"].texture;
 
 		this.addChild(this.assetSprite);
 		this.addChild(this.gridSprite);
