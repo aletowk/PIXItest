@@ -2,7 +2,7 @@
 
 class Player extends PIXI.Sprite
 {
-	constructor(name,parent,uiLayer)
+	constructor(name,parent,uiLayer,map)
 	{
 		super();
 		this.uiLayer = uiLayer;
@@ -23,6 +23,8 @@ class Player extends PIXI.Sprite
 		this.setParent(parent);
 		this.uiLayer.addChild(this.selectionCircle);
 		this.uiLayer.addChild(this.targetCircle);
+
+		this.aStarObject = new AStar(map.tileArray);
 	}
 	init(texture,map)
 	{
@@ -89,18 +91,33 @@ class Player extends PIXI.Sprite
 	}
 	move(event)
 	{
+		// Old
+		// if(this.movingFlag)
+		// {
+		// 	let mapTile_X = Math.floor(event.clientX / this.map.tilesize);
+		// 	let mapTile_Y = Math.floor(event.clientY / this.map.tilesize);
+		// 	console.log("Tile ID : "+mapTile_X+" | "+mapTile_Y);
+		// 	/* Make Target Circle Visible */
+		// 	this.targetCircle.x = (mapTile_X * this.map.tilesize) + (this.map.tilesize/2);
+		// 	this.targetCircle.y = (mapTile_Y * this.map.tilesize) + (this.map.tilesize/2);
+		// 	this.targetCircle.visible = true;
+		// 	this.selected = true;
+		// 	this.movingFlag = false;
+		// 	this.movingFlag_Go = true;
+		// }
+		// 
+		
+		// New implementation, using A* algo
 		if(this.movingFlag)
 		{
 			let mapTile_X = Math.floor(event.clientX / this.map.tilesize);
 			let mapTile_Y = Math.floor(event.clientY / this.map.tilesize);
-			console.log("Tile ID : "+mapTile_X+" | "+mapTile_Y);
-			/* Make Target Circle Visible */
-			this.targetCircle.x = (mapTile_X * this.map.tilesize) + (this.map.tilesize/2);
-			this.targetCircle.y = (mapTile_Y * this.map.tilesize) + (this.map.tilesize/2);
-			this.targetCircle.visible = true;
-			this.selected = true;
-			this.movingFlag = false;
-			this.movingFlag_Go = true;
+			console.log("Target Tile ID : "+mapTile_X+" | "+mapTile_Y);
+			// this.map.tileArray[mapTile_X][mapTile_Y].inPathGraphics.visible = true;
+			var playerPosInIndex = [Math.floor(this.position.x/this.map.size),
+									Math.floor(this.position.y/this.map.size)];
+			var pathToFollow = this.aStarObject.search(this.map.tileArray,playerPosInIndex,[mapTile_X,mapTile_Y]);
+			console.log(pathToFollow);
 		}
 	}
 }

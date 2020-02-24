@@ -16,9 +16,12 @@ document.body.appendChild(renderer.view);
 /* Global variables */
 let stage = new PIXI.Container();
 let uiLayer = new PIXI.Container();
-let player = new Player("Jack",stage,uiLayer);
-let updatableList = [];
 let map = new Tilemap(100,64,stage);
+
+let player = new Player("Jack",stage,uiLayer,map);
+
+let updatableList = [];
+
 
 setupScene();
 
@@ -43,6 +46,11 @@ function updateScene()
 
     renderer.render(stage);
 }
+
+
+
+
+
 function setupScene()
 {
     /* Setup graphics objects */
